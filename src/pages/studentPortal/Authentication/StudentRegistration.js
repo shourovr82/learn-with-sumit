@@ -17,7 +17,7 @@ const StudentRegistration = () => {
       setRegisterError(responseError.data);
     }
     if (data?.accessToken && data?.user) {
-      navigate("/course");
+      navigate("/course/1");
     }
   }, [data, responseError, navigate]);
 

@@ -23,32 +23,28 @@ const QuizModal = ({ quizModalOpen, setQuizModalOpen, getSingleVideo }) => {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   const handleChangeBtn = ({ e, o }) => {
-    const selectedAns = {
-      option: o?.option,
-      correct: o?.isCorrect,
-      selected: e.target.checked,
-      optionId: o?.id
-    };
 
-    const answerIndex = selectedAnswers.findIndex(answer => answer.optionId === o?.id);
 
-    if (e.target.checked) {
-      if (answerIndex === -1) {
-        setSelectedAnswers(prevAnswers => [...prevAnswers, selectedAns]);
-      } else {
-        setSelectedAnswers(prevAnswers => {
-          const updatedAnswers = [...prevAnswers];
-          updatedAnswers[answerIndex] = selectedAns;
-          return updatedAnswers;
-        });
-      }
-    } else {
-      setSelectedAnswers(prevAnswers => prevAnswers.filter(answer => answer.optionId !== o?.id));
-    }
+    // const answerIndex = selectedAnswers.findIndex(answer => answer.optionId === o?.id);
+
+    // if (e.target.checked) {
+    //   if (answerIndex === -1) {
+    //     setSelectedAnswers(prevAnswers => [...prevAnswers, selectedAns]);
+    //   } else {
+    //     setSelectedAnswers(prevAnswers => {
+    //       const updatedAnswers = [...prevAnswers];
+    //       updatedAnswers[answerIndex] = selectedAns;
+    //       return updatedAnswers;
+    //     });
+    //   }
+    // } else {
+    //   setSelectedAnswers(prevAnswers => prevAnswers.filter(answer => answer.optionId !== o?.id));
+    // }
   };
 
 
   const handleSubmitQuiz = () => {
+    setQuizModalOpen(false)
     // console.log(selectedAnswers);
   }
   return (
@@ -94,7 +90,7 @@ const QuizModal = ({ quizModalOpen, setQuizModalOpen, getSingleVideo }) => {
                     as="h3"
                     className="text-2xl font-medium leading-6 text-white"
                   >
-                    Quizzes for {getSingleVideo?.title}
+                    {filteredQuizzes?.length && ` Quizzes for ${getSingleVideo?.title}`}
                   </Dialog.Title>
                   <>
                     <section className="py-6 ">
@@ -104,12 +100,12 @@ const QuizModal = ({ quizModalOpen, setQuizModalOpen, getSingleVideo }) => {
 
                           </h1>
                           <p className="text-sm text-slate-200">
-                            Each question contains 5 Mark
+                            {filteredQuizzes?.length && `Each question contains 5 Mark`}
                           </p>
                         </div>
                         <div className="space-y-8 ">
                           {
-                            filteredQuizzes?.length && filteredQuizzes?.map((singleQuiz, index) =>
+                            filteredQuizzes?.length ? filteredQuizzes?.map((singleQuiz, index) =>
                               <div key={Math.random()} className="quiz">
                                 <h4 className="question">
                                   Quiz {index + 1}  - {singleQuiz?.question}
@@ -127,7 +123,7 @@ const QuizModal = ({ quizModalOpen, setQuizModalOpen, getSingleVideo }) => {
                                   </form>
 
                                 </div>
-                              </div>)
+                              </div>) : 'No Quiz available for this Video'
                           }
 
                         </div>
